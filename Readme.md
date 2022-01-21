@@ -4,7 +4,7 @@ This script (python3) will check all selected and available devices every 5 seco
 
 ## Requirements
 
-* [Voicemeeter](https://vb-audio.com/Voicemeeter/potato.htm) installed and running
+* [Voicemeeter](https://vb-audio.com/Voicemeeter/potato.htm) installed and running (supports VM, VM Banana, VM Potato)
 * [python3](https://www.python.org/downloads/) and `py` available on the PATH
 
 ## Setup

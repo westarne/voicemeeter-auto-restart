@@ -5,12 +5,14 @@ vblib = cdll.LoadLibrary('./VoicemeeterRemote64.dll')
 
 # connect to voicemeeter
 
+vmType = 0
+
 ## declare types
 vblib.VBVMR_Login.restype = c_long
 vblib.VBVMR_Logout.restype = c_long
 
 def login():
-    global vblib
+    global vblib, vmType
 
     print("Logging in...")
     loginResult = vblib.VBVMR_Login()
@@ -18,7 +20,33 @@ def login():
         exit()
 
     print("Successfully logged in.")
+
+    vmType = getVoicemeeterType()
+
     print()
+
+# detect voicemeeter type
+
+## declare types
+vblib.VBVMR_GetVoicemeeterType.argtypes = (POINTER(c_long),)
+vblib.VBVMR_GetVoicemeeterType.restype = c_long
+
+def getVoicemeeterType():
+    vmType = c_long()
+    vblib.VBVMR_GetVoicemeeterType(byref(vmType))
+
+    print("Detected type is: %s" % vmType.value)
+
+    return vmType.value
+
+def getDeviceCount(vmType):
+    match(vmType):
+        case 1:
+            return 2
+        case 2:
+            return 3
+        case 3:
+            return 5
 
 
 # available device info
@@ -31,8 +59,8 @@ vblib.VBVMR_Output_GetDeviceDescA.restype = c_long
 
 ## get device info
 
-def getDeviceType(type):
-    match(type):
+def getDeviceType(devType):
+    match(devType):
         case 1:
             return "MME"
         case 3:
@@ -96,17 +124,21 @@ def getSelectedDevice(index, devType):
     return selectedDevice.value.decode('ascii')
 
 def getSelectedOutputDevices():
+    global vmType
+
     selectedOutputDevices = []
 
-    for n in range(5):
+    for n in range(getDeviceCount(vmType)):
         selectedOutputDevices.append(getSelectedDevice(n, "Bus"))
 
     return selectedOutputDevices
 
 def getSelectedInputDevices():
+    global vmType
+
     selectedInputDevices = []
 
-    for n in range(5):
+    for n in range(getDeviceCount(vmType)):
         selectedInputDevices.append(getSelectedDevice(n, "Strip"))
 
     return selectedInputDevices
@@ -162,6 +194,8 @@ def checkForRestart():
     lastUnavailableInputDevices = unavailableInputDevices
 
     return shouldRestart
+
+# script execution
 
 login()
 
