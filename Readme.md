@@ -31,14 +31,14 @@ The `.vbs` file will start the `.bat` file once, but without a terminal window. 
 
 To enable autostart for this, press `Win + R` and enter `shell:startup` to open the *Autostart* folder of Windows. Place a link file to the `.vbs` file in that folder. To deactivate the autostart simply remove the link.
 
-## Stop the process
+## Stopping the process
 
-Stopping the process is not really included in the scripts at the moment. If you chose the run the `py` or `bat` you can simply stop the process directly in your cmd or in the task manager.
+Stopping the process is not really included in the scripts at the moment. If you chose to run the `py` or `bat` you can simply stop the process directly in your cmd or in the task manager.
 
-If you chose the `vbs` approach your `cmd` window is hidden. You will have to search the Task Manager for the correct `cmd.exe`, stop that process and afterwards stop the `python.exe` related to the script.
+If you chose the `vbs` approach, your `cmd` window is hidden. You will have to search the Task Manager for the correct `cmd.exe`, stop that process and afterwards stop the `python.exe` related to the script.
 
 ## Known Issues
 
 ### py script exits if voicemeeter is not available
 
-The script needs Voicemeeter to be running (Login status 0), because otherwise the selected devices can not be determined. If that's not the case the python script will simply exit because logout and login again did not work correctly. The `.bat` file will automatically restart it because of this 5s after exit.
+The script needs Voicemeeter to be running (Login status 0), because otherwise the selected devices can not be determined. If that's not the case the python script will simply exit because logout and login again did not work correctly. The `.bat` file will automatically restart it 5s after exit.
