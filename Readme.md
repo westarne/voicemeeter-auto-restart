@@ -33,9 +33,9 @@ To enable autostart for this, press `Win + R` and enter `shell:startup` to open 
 
 ## Stopping the process
 
-Stopping the process is not really included in the scripts at the moment. If you chose to run the `py` or `bat` you can simply stop the process directly in your cmd or in the task manager.
+You can stop the `python` process in the Task Manager. The return code should not be 0 and thus the `.bat` will stop as well.
 
-If you chose the `vbs` approach, your `cmd` window is hidden. You will have to search the Task Manager for the correct `cmd.exe`, stop that process and afterwards stop the `python.exe` related to the script.
+If that does not work and your `cmd` window is hidden, you will have to search the Task Manager for the correct `cmd.exe`, stop that process and afterwards stop the `python.exe` related to the script.
 
 ## Known Issues
 
