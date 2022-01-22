@@ -42,3 +42,7 @@ If that does not work and your `cmd` window is hidden, you will have to search t
 ### py script exits if voicemeeter is not available
 
 The script needs Voicemeeter to be running (Login status 0), because otherwise the selected devices can not be determined. If that's not the case the python script will simply exit because logout and login again did not work correctly. The `.bat` file will automatically restart it 5s after exit.
+
+### py script does not log out if the process is killed
+
+It's not possible in Windows to gracefully interrupt and react on process kills. So if you're terminating the process from the Task Manager, it will not logout correctly. This means, that Voicemeeter will still detect the Remote Api connection and might block further logins if your limit is reached. Multiple restarts and kills will block multiple slots in VM.
