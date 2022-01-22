@@ -1,7 +1,16 @@
 from ctypes import *
+import atexit
 import time
 
 vblib = cdll.LoadLibrary('./VoicemeeterRemote64.dll')
+
+# define exit method
+
+def exit_handler():
+    print("Exiting...")
+    print("Logout signal: %s" % logout())
+
+atexit.register(exit_handler)
 
 # connect to voicemeeter
 
@@ -24,6 +33,10 @@ def login():
     vmType = getVoicemeeterType()
 
     print()
+
+def logout():
+    return vblib.VBVMR_Logout()
+
 
 # detect voicemeeter type
 
@@ -203,8 +216,3 @@ while True:
     if checkForRestart():
         restartAudioEngine()
     time.sleep(5)
-
-
-# Logout
-loginResult = vblib.VBVMR_Logout()
-print("Logout result is %s" % loginResult)
