@@ -161,13 +161,17 @@ def getSelectedInputDevices():
 
 def getUnavailableOutputDevices():
     availableOutputDevices = getAvailableOutputDevices()
-    return [device for device in getSelectedOutputDevices()
+    selectedOutputDevices = getSelectedOutputDevices()
+
+    return [device for device in selectedOutputDevices
             if device != ""
                 and device not in availableOutputDevices]
 
 def getUnavailableInputDevices():
     availableInputDevices = getAvailableInputDevices()
-    return [device for device in getSelectedInputDevices()
+    selectedInputDevices = getSelectedInputDevices()
+
+    return [device for device in selectedInputDevices
             if device != ""
                 and device not in availableInputDevices]
 
