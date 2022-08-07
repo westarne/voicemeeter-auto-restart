@@ -1,6 +1,9 @@
 from ctypes import *
 import atexit
 import time
+import sys
+
+codec = "latin-1"
 
 vblib = cdll.LoadLibrary('./VoicemeeterRemote64.dll')
 
@@ -97,7 +100,7 @@ def getAvailableOutputDevices():
         if ret != 0:
             login()
 
-        devices.append(devName.value.decode('ascii'))
+        devices.append(devName.value.decode(codec))
 
     return devices
 
@@ -115,7 +118,7 @@ def getAvailableInputDevices():
         if ret != 0:
             login()
 
-        devices.append(devName.value.decode('ascii'))
+        devices.append(devName.value.decode(codec))
 
     return devices
 
@@ -127,14 +130,14 @@ vblib.VBVMR_GetParameterStringA.argtypes = (c_char_p, c_char_p)
 vblib.VBVMR_GetParameterStringA.restype = c_long
 
 def getSelectedDevice(index, devType):
-    deviceToCheck = ("%s[%s].device.name" % (devType, index)).encode('ascii')
+    deviceToCheck = ("%s[%s].device.name" % (devType, index)).encode(codec)
     selectedDevice = create_string_buffer(512)
 
     ret = vblib.VBVMR_GetParameterStringA(deviceToCheck, selectedDevice)
     if ret != 0:
         login()
 
-    return selectedDevice.value.decode('ascii')
+    return selectedDevice.value.decode(codec)
 
 def getSelectedOutputDevices():
     global vmType
@@ -184,7 +187,7 @@ vblib.VBVMR_SetParameterFloat.restype = c_long
 def restartAudioEngine():
     print("Restarting...")
     print()
-    vblib.VBVMR_SetParameterFloat("Command.Restart".encode('ascii'), 1)
+    vblib.VBVMR_SetParameterFloat("Command.Restart".encode(codec), 1)
 
 # check for restart condition
 
